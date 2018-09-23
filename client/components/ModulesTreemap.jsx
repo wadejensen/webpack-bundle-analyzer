@@ -1,5 +1,4 @@
-/** @jsx h */
-import {h, Component} from 'preact';
+import React from 'react';
 import filesize from 'filesize';
 import {computed} from 'mobx';
 import {observer} from 'mobx-preact';
@@ -24,22 +23,18 @@ const SIZE_SWITCH_ITEMS = [
 ];
 
 @observer
-export default class ModulesTreemap extends Component {
+export default class ModulesTreemap extends React.Component {
   state = {
-    sidebarPinned: false,
     showTooltip: false,
     tooltipContent: null
   };
 
   render() {
-    const {sidebarPinned, showTooltip, tooltipContent} = this.state;
+    const {showTooltip, tooltipContent} = this.state;
 
     return (
       <div className={s.container}>
-        <Sidebar pinned={sidebarPinned}
-          onToggle={this.handleSidebarToggle}
-          onPinStateChange={this.handleSidebarPinStateChange}
-          onResize={this.handleSidebarResize}>
+        <Sidebar>
           <div className={s.sidebarGroup}>
             <Switcher label="Treemap sizes"
               items={this.sizeSwitchItems}
@@ -178,21 +173,6 @@ export default class ModulesTreemap extends Component {
 
   handleConcatenatedModulesContentToggle = flag => {
     store.showConcatenatedModulesContent = flag;
-  }
-
-  handleSidebarToggle = () => {
-    if (this.state.sidebarPinned) {
-      setTimeout(() => this.treemap.resize());
-    }
-  }
-
-  handleSidebarPinStateChange = pinned => {
-    this.setState({sidebarPinned: pinned});
-    setTimeout(() => this.treemap.resize());
-  }
-
-  handleSidebarResize = () => {
-    this.treemap.resize();
   }
 
   handleSizeSwitch = sizeSwitchItem => {
