@@ -12,9 +12,11 @@ import Checkbox from './Checkbox';
 import CheckboxList from './CheckboxList';
 
 import s from './ModulesTreemap.css';
+import sidebarStyles from './Sidebar.css';
 import Search from './Search';
 import {store} from '../store';
 import ModulesList from './ModulesList';
+import ModuleInfo from './ModuleInfo';
 
 const SIZE_SWITCH_ITEMS = [
   {label: 'Stat', prop: 'statSize'},
@@ -24,6 +26,9 @@ const SIZE_SWITCH_ITEMS = [
 
 @observer
 export default class ModulesTreemap extends React.Component {
+  treemap = null;
+  treemapContainer = null;
+
   state = {
     showTooltip: false,
     tooltipContent: null
@@ -35,7 +40,7 @@ export default class ModulesTreemap extends React.Component {
     return (
       <div className={s.container}>
         <Sidebar>
-          <div className={s.sidebarGroup}>
+          <div className={sidebarStyles.group}>
             <Switcher label="Treemap sizes"
               items={this.sizeSwitchItems}
               activeItem={this.activeSizeItem}
@@ -49,7 +54,7 @@ export default class ModulesTreemap extends React.Component {
               </div>
             }
           </div>
-          <div className={s.sidebarGroup}>
+          <div className={sidebarStyles.group}>
             <Search label="Search modules"
               query={store.searchQuery}
               autofocus
@@ -77,7 +82,7 @@ export default class ModulesTreemap extends React.Component {
             }
           </div>
           {this.chunkItems.length > 1 &&
-            <div className={s.sidebarGroup}>
+            <div className={sidebarStyles.group}>
               <CheckboxList label="Show chunks"
                 items={this.chunkItems}
                 checkedItems={store.selectedChunks}
@@ -86,14 +91,27 @@ export default class ModulesTreemap extends React.Component {
             </div>
           }
         </Sidebar>
-        <Treemap ref={this.saveTreemapRef}
-          className={s.map}
-          data={store.visibleChunks}
-          highlightGroups={this.highlightedModules}
-          weightProp={store.activeSize}
-          onMouseLeave={this.handleMouseLeaveTreemap}
-          onGroupHover={this.handleTreemapGroupHover}/>
-        <Tooltip visible={showTooltip}>
+        <div ref={this.saveTreemapContainerRef} className={s.map}>
+          <Treemap ref={this.saveTreemapRef}
+            data={store.visibleChunks}
+            highlightGroups={this.highlightedModules}
+            weightProp={store.activeSize}
+            onMouseLeave={this.handleMouseLeaveTreemap}
+            onGroupHover={this.handleTreemapGroupHover}
+            onGroupSelect={this.handleTreemapGroupSelect}/>
+        </div>
+        <Sidebar ref={this.saveRightSidebarRef}
+          position="right"
+          autoShow={false}>
+          {store.selectedModule ?
+            <ModuleInfo module={store.selectedModule}/>
+            :
+            <div className={s.noSelectedModule}>
+              Select a module to see more information about it.
+            </div>
+          }
+        </Sidebar>
+        <Tooltip visible={showTooltip} container={this.treemapContainer}>
           {tooltipContent}
         </Tooltip>
       </div>
@@ -108,7 +126,7 @@ export default class ModulesTreemap extends React.Component {
 
     return (typeof size === 'number') ?
       <div className={isActive ? s.activeSize : ''}>
-        {sizeLabel} size: <strong>{filesize(size)}</strong>
+        {sizeLabel} size:&nbsp;<strong>{filesize(size)}</strong>
       </div>
       :
       null;
@@ -204,13 +222,20 @@ export default class ModulesTreemap extends React.Component {
     }
   };
 
+  handleTreemapGroupSelect = module => {
+    store.selectedModule = module;
+    this.rightSidebar.toggleVisibility(true);
+  }
+
   handleFoundModuleClick = module => this.treemap.zoomToGroup(module);
 
   isModuleVisible = module => (
     this.treemap.isGroupRendered(module)
   )
 
+  saveTreemapContainerRef = node => this.treemapContainer = node;
   saveTreemapRef = treemap => this.treemap = treemap;
+  saveRightSidebarRef = sidebar => this.rightSidebar = sidebar;
 
   getTooltipContent(module) {
     if (!module) return null;
@@ -223,7 +248,7 @@ export default class ModulesTreemap extends React.Component {
         {!module.inaccurateSizes && this.renderModuleSize(module, 'parsed')}
         {!module.inaccurateSizes && this.renderModuleSize(module, 'gzip')}
         {module.path &&
-          <div>Path: <strong>{module.path}</strong></div>
+          <div>Path:&nbsp;<strong>{module.path}</strong></div>
         }
       </div>
     );
