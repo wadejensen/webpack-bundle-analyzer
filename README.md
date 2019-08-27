@@ -22,7 +22,7 @@ npm install --save-dev webpack-bundle-analyzer
 <h2 align="center">Usage (as a plugin)</h2>
 
 ```js
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleReportPlugin = require('webpack-bundle-analyzer').BundleReportPlugin;
 
 module.exports = {
   plugins: [
@@ -69,7 +69,7 @@ new BundleAnalyzerPlugin(options?: object)
 
 You can analyze an existing bundle if you have a webpack stats JSON file.
 
-You can generate it using `BundleAnalyzerPlugin` with `generateStatsFile` option set to `true` or with this simple
+You can generate it using `BundleReportPlugin` with `generateStatsFile` option set to `true` or with this simple
 command:
 
 ```bash
