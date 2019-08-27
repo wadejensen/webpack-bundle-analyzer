@@ -26,7 +26,7 @@ const BundleReportPlugin = require('webpack-bundle-analyzer').BundleReportPlugin
 
 module.exports = {
   plugins: [
-    new BundleAnalyzerPlugin()
+    new BundleReportPlugin()
   ]
 }
 ```
@@ -48,7 +48,7 @@ And it also shows their gzipped sizes!
 <h2 align="center">Options (for plugin)</h2>
 
 ```js
-new BundleAnalyzerPlugin(options?: object)
+new BundleReportPlugin(options?: object)
 ```
 
 |Name|Type|Description|

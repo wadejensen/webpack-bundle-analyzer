@@ -1,4 +1,4 @@
-const BundleAnalyzerPlugin = require('../../lib/BundleAnalyzerPlugin');
+const BundleReportPlugin = require('../../lib/BundleAnalyzerPlugin');
 
 module.exports = {
   entry: `${__dirname}/src.js`,
@@ -7,7 +7,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new BundleAnalyzerPlugin({
+    new BundleReportPlugin({
       analyzerMode: 'static',
       reportFilename: 'report.html',
       openAnalyzer: false

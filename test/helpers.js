@@ -9,7 +9,7 @@ global.sinon = require('sinon');
 global.webpackCompile = webpackCompile;
 global.makeWebpackConfig = makeWebpackConfig;
 
-const BundleAnalyzerPlugin = require('../lib/BundleAnalyzerPlugin');
+const BundleReportPlugin = require('../lib/BundleAnalyzerPlugin');
 
 function webpackCompile(config) {
   return new Promise((resolve, reject) =>
@@ -39,7 +39,7 @@ function makeWebpackConfig(opts) {
     },
     plugins: (plugins => {
       plugins.push(
-        new BundleAnalyzerPlugin(opts.analyzerOpts)
+        new BundleReportPlugin(opts.analyzerOpts)
       );
 
       if (opts.multipleChunks) {
