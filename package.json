@@ -1,17 +1,17 @@
 {
-  "name": "@jasperck/webpack-bundle-analyzer",
+  "name": "@wadejensen/webpack-bundle-analyzer",
   "version": "2.14.0",
   "description": "Webpack plugin and CLI utility that represents bundle content as convenient interactive zoomable treemap",
-  "author": "jasperck",
+  "author": "wadejensen",
   "license": "MIT",
-  "homepage": "https://github.com/jasperck/webpack-bundle-analyzer",
-  "changelog": "https://github.com/jasperck/webpack-bundle-analyzer/blob/master/CHANGELOG.md",
+  "homepage": "https://github.com/wadejensen/webpack-bundle-analyzer",
+  "changelog": "https://github.com/wadejensen/webpack-bundle-analyzer/blob/master/CHANGELOG.md",
   "bugs": {
-    "url": "https://github.com/jasperck/webpack-bundle-analyzer/issues"
+    "url": "https://github.com/wadejensen/webpack-bundle-analyzer/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jasperck/webpack-bundle-analyzer.git"
+    "url": "git+https://github.com/wadejensen/webpack-bundle-analyzer.git"
   },
   "main": "lib/index.js",
   "bin": "lib/bin/analyzer.js",
