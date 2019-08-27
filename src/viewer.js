@@ -155,7 +155,7 @@ function generateReport(bundleStats, opts) {
 
 async function generateJSONReport(bundleStats, opts) {
   const {
-    openBrowser = true,
+    openBrowser = true, // eslint-disable-line no-unused-vars
     reportFilename = 'report.json',
     bundleDir = null,
     logger = new Logger(),
@@ -191,10 +191,6 @@ async function generateJSONReport(bundleStats, opts) {
   logger.info(
     `${bold('Webpack Bundle Analyzer')} saved report to ${bold(reportFilepath)}`
   );
-
-  if (openBrowser) {
-    opener(`file://${reportFilepath}`);
-  }
 }
 
 function getAssetContent(filename) {
