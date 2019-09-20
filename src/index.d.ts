@@ -1,4 +1,6 @@
-export declare type BundleReportPlugin = any;
+export declare class BundleReportPlugin {
+  constructor(opts: any);
+}
 
 export declare type BundleReport = JsBundle[];
 export declare type JsBundle = {
